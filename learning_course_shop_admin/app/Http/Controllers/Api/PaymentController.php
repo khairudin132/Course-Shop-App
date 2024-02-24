@@ -20,7 +20,7 @@ class PaymentController extends Controller
             $user = $request->user();
             $token = $user->token;
 
-            Stripe::setApiKey('sk_test_51OhUsAESxQYGv7yMYBURmA9Jehs04bKIGaBPiDIWfjSUeVhPlcVWbofK5Pz2kCcCIeGFt7alXilMgbjhp0xfMGxn002L6OzbnX');
+            Stripe::setApiKey(env('STRIPE_TEST_API_KEY'));
 
             $getCourse = Course::where('id', '=', $courseId)->first();
 
@@ -110,10 +110,10 @@ class PaymentController extends Controller
 
         // The library needs to be configured with your account's secret key.
         // Ensure the key is kept out of any version control system you might be using.
-        $stripe = new \Stripe\StripeClient('sk_test_51OhUsAESxQYGv7yMYBURmA9Jehs04bKIGaBPiDIWfjSUeVhPlcVWbofK5Pz2kCcCIeGFt7alXilMgbjhp0xfMGxn002L6OzbnX');
+        $stripe = new \Stripe\StripeClient(env('STRIPE_TEST_API_KEY'));
 
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        $endpoint_secret = 'whsec_682NymPM4x2W8sYzP2WgCc5tSclJedvj';
+        $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
 
         $payload = @file_get_contents('php://input');
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
